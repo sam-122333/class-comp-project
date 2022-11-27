@@ -9,10 +9,9 @@ const News = (props) => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
-  const [effectChange, setEffectChange] = useState(0);
 
   const updateNews = async () => {
-    let url = `https://newsapi.org/v2/top-headlines?country=us&category=${props.category}&apiKey=d28a6f86f06f4c52b76362041fc66525&page=1&pageSize=${props.pageSize}`;
+    let url = `https://newsapi.org/v2/top-headlines?country=us&category=${props.category}&apiKey=4c3ed9afd011468b889497234b343046&page=1&pageSize=${props.pageSize}`;
     setLoading(true);
     let data = await fetch(url);
     let parsedData = await data.json();
@@ -21,16 +20,12 @@ const News = (props) => {
     setTotalResults(parsedData.totalResults);
   };
   useEffect(() => {
-    console.log("effect render");
     updateNews();
+    //eslint-disable-next-line
   }, []);
 
-  // useEffect(() => {
-  //   console.log("change effect");
-  // }, [effectChange]);
-
   // const componentDidMount = async () => {
-  //   let url = `https://newsapi.org/v2/top-headlines?country=us&category=${props.category}&apiKey=d28a6f86f06f4c52b76362041fc66525&page=1&pageSize=${props.pageSize}`;
+  //   let url = `https://newsapi.org/v2/top-headlines?country=us&category=${props.category}&apiKey=4c3ed9afd011468b889497234b343046&page=1&pageSize=${props.pageSize}`;
   //   setLoading(true);
   //   let data = await fetch(url);
   //   let parsedData = await data.json();
@@ -40,22 +35,22 @@ const News = (props) => {
   // };
 
   const fetchMoreData = async () => {
-    setEffectChange(effectChange + 1);
-    setPage(page + 1);
     let url = `https://newsapi.org/v2/top-headlines?country=us&category=${
       props.category
-    }&apiKey=d28a6f86f06f4c52b76362041fc66525&page=${page + 1}&pageSize=${
+    }&apiKey=4c3ed9afd011468b889497234b343046&page=${page + 1}&pageSize=${
       props.pageSize
     }`;
+    setPage(page + 1);
+
     let data = await fetch(url);
     let parsedData = await data.json();
     setArticles(articles.concat(parsedData.articles));
   };
 
   return (
-    <div className="container my-3">
+    <div className="container my-5">
       {console.log("render return")}
-      <h2>Top Headlines</h2>
+      <h2 style={{ marginTop: "70px" }}>Top Headlines</h2>
       {loading && <Spinner />}
       <InfiniteScroll
         dataLength={articles.length}
@@ -91,4 +86,4 @@ News.propTypes = {
 News.defaultProps = { category: "health", pageSize: 3 };
 export default News;
 
-// `https://newsapi.org/v2/top-headlines?country=us&category=science&apiKey=d28a6f86f06f4c52b76362041fc66525&page=1`;
+// `https://newsapi.org/v2/top-headlines?country=us&category=science&apiKey=4c3ed9afd011468b889497234b343046&page=1`;
